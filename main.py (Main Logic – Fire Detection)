@@ -1,0 +1,25 @@
+import time
+from sensor import read_temperature
+from motor_control import move_forward, stop
+from relay_control import pump_on, pump_off
+from web_server import connect_wifi, start_server
+import _thread
+
+TEMP_THRESHOLD = 50  # Degree Celsius
+
+connect_wifi()
+_thread.start_new_thread(start_server, ())
+
+while True:
+    temp = read_temperature()
+    print("Temperature:", temp)
+
+    if temp > TEMP_THRESHOLD:
+        stop()
+        pump_on()
+        time.sleep(5)
+        pump_off()
+    else:
+        move_forward()
+
+    time.sleep(1)
