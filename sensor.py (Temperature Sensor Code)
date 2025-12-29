@@ -1,0 +1,11 @@
+from machine import Pin, ADC
+import time
+
+# LM35 sensor connected to ADC pin
+sensor = ADC(26)
+
+def read_temperature():
+    adc_value = sensor.read_u16()
+    voltage = adc_value * (3.3 / 65535)
+    temperature = voltage * 100  # LM35 formula
+    return temperature
