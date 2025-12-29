@@ -1,0 +1,28 @@
+import network
+import socket
+
+def connect_wifi():
+    wlan = network.WLAN(network.STA_IF)
+    wlan.active(True)
+    wlan.connect("YOUR_WIFI_NAME", "YOUR_WIFI_PASSWORD")
+
+    while not wlan.isconnected():
+        pass
+
+    print("Connected:", wlan.ifconfig())
+
+def start_server():
+    s = socket.socket()
+    s.bind(('', 80))
+    s.listen(1)
+
+    while True:
+        conn, addr = s.accept()
+        request = conn.recv(1024)
+        response = """\
+HTTP/1.1 200 OK
+
+Fire Extinguishing Rover is Running
+"""
+        conn.send(response)
+        conn.close()
