@@ -1,0 +1,10 @@
+from machine import Pin
+import time
+
+relay = Pin(6, Pin.OUT)
+
+def pump_on():
+    relay.high()
+
+def pump_off():
+    relay.low()
